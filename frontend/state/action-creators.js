@@ -16,15 +16,22 @@ export function moveCounterClockwise() {
   }
  }
 
-export function selectAnswer() {
+export function selectAnswer(quizID) {
   return{
-    type: SET_SELECTED_ANSWER
+    type: SET_SELECTED_ANSWER, payload: quizID
   }
  }
 
 export function setMessage() { }
 
-export function setQuiz() { }
+
+export function setQuiz(data) { 
+  return(
+    {type: SET_QUIZ_INTO_STATE, payload: data}
+  )
+  
+}
+
 
 export function inputChange() { }
 
@@ -37,9 +44,17 @@ export function fetchQuiz() {
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state//
 
-    dispatch({type: SET_QUIZ_INTO_STATE})
-   
-
+    // dispatch(setQuiz())
+    // axios
+    // .get('http://localhost:9000/api/quiz/next')
+    // .then(res =>{
+    //   console.log(res)
+    //   dispatch({type: SET_QUIZ_INTO_STATE, payload: res.data})
+    // })
+    // .catch(err=>{
+    //   console.log(err)
+    // })
+    // dispatch({type: 'FETCH_QUIZ_SUCCESS', payload:data})
   }
 }
 export function postAnswer() {
