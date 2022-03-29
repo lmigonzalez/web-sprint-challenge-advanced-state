@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { fetchQuiz, setQuiz, selectAnswer } from "../state/action-creators";
+import { fetchQuiz, setQuiz, selectAnswer, setMessage } from "../state/action-creators";
 
 function Quiz(props) {
   // const products = useSelector((state) => state.quiz)
@@ -9,32 +9,55 @@ function Quiz(props) {
 
   const { data } = props;
 
+  
+
   const fetchData = () => {
     axios
       .get("http://localhost:9000/api/quiz/next")
       .then((res) => {
         dispatch(props.setQuiz(res.data));
+        // console.log(res)
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  // console.log(quizObj)
+
+  const postData = () =>{
+    axios
+    .post('http://localhost:9000/api/quiz/answer', { "quiz_id": data.quiz.quiz_id, "answer_id": data.selectedAnswer })
+    .then(res=>{
+      console.log(data)
+
+      dispatch(props.setMessage(res.data.message))
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+
+
+
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  // console.log(data.quiz)
+  // console.log(data)
   // console.log(data.quiz.quiz_id)
 
   const handleSelect = (e) => {
     e.preventDefault();
     dispatch(props.selectAnswer(e.target.value));
+    
   };
 
   const handleSubmit = (e) =>{
     e.preventDefault()
     fetchData()
+    postData()
   }
   
   return (
@@ -102,6 +125,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchQuiz, selectAnswer, setQuiz })(
+export default connect(mapStateToProps, { fetchQuiz, selectAnswer, setQuiz, setMessage })(
   Quiz
 );
