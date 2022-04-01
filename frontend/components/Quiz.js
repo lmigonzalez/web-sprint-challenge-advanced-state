@@ -29,7 +29,6 @@ function Quiz(props) {
     axios
     .post('http://localhost:9000/api/quiz/answer', { "quiz_id": data.quiz.quiz_id, "answer_id": data.selectedAnswer })
     .then(res=>{
-      console.log(data)
 
       dispatch(props.setMessage(res.data.message))
     })

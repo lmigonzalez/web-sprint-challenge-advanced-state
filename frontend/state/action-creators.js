@@ -1,7 +1,7 @@
 // ❗ You don't need to add extra action creators to achieve MVP
 
 import axios from "axios"
-import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER, SET_INFO_MESSAGE} from "./action-types"
+import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER, SET_INFO_MESSAGE, INPUT_CHANGE, RESET_FORM} from "./action-types"
 
 
 export function moveClockwise() {
@@ -33,16 +33,27 @@ export function setMessage(message) {
 
 
 export function setQuiz(data) { 
-  return(
-    {type: SET_QUIZ_INTO_STATE, payload: data}
-  )
+  return{type: SET_QUIZ_INTO_STATE, payload: data}
+  
   
 }
 
 
-export function inputChange() { }
+export function inputChange(data) { 
+  return(
+    {
+      type: INPUT_CHANGE, payload: data
+    }
+  )
+}
 
-export function resetForm() { }
+export function resetForm(data) {
+  return(
+    {
+      type: RESET_FORM, payload: data
+    }
+  )
+ }
 
 // ❗ Async action creators
 export function fetchQuiz() {
@@ -51,17 +62,6 @@ export function fetchQuiz() {
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state//
 
-    // dispatch(setQuiz())
-    // axios
-    // .get('http://localhost:9000/api/quiz/next')
-    // .then(res =>{
-    //   console.log(res)
-    //   dispatch({type: SET_QUIZ_INTO_STATE, payload: res.data})
-    // })
-    // .catch(err=>{
-    //   console.log(err)
-    // })
-    // dispatch({type: 'FETCH_QUIZ_SUCCESS', payload:data})
   }
 }
 export function postAnswer() {
